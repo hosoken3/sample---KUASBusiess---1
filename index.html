@@ -120,16 +120,38 @@
         <!-- 左パネル -->
         <div class="panel" id="panel-left">
             <div class="panel-header">ソースドキュメント</div>
-            <div class="source-list">
-                <button class="btn-primary" onclick="startAnalysis()" id="analyze-btn">
-                    特許PDFの基礎解析
+            <div class="source-list" style="padding: 12px; display: flex; flex-direction: column; gap: 12px;">
+                <button style="width: 100%; padding: 10px; background: transparent; color: var(--primary); border: 1px dashed var(--primary); border-radius: 8px; font-weight: 600; font-size: 13px; display: flex; align-items: center; justify-content: center; gap: 8px; cursor: pointer; transition: 0.2s;" onmouseover="this.style.background='#eef2ff'" onmouseout="this.style.background='transparent'">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+                    ソースを追加
                 </button>
-                <div class="source-item">
-                    <svg width="20" height="20" style="color:var(--primary)"><path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"/></svg>
-                    <div>
-                        <div style="font-size:13px; font-weight:600;">company_patent_2026.pdf</div>
+
+                <div style="border: 1px solid var(--primary); border-radius: 8px; background: #fafafa; position: relative;">
+                    <div style="padding: 12px; display: flex; gap: 10px; align-items: flex-start;">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="color:var(--primary); margin-top: 2px; flex-shrink: 0;"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+                        <div style="flex:1; min-width: 0;">
+                            <div style="font-size: 13px; font-weight: 700; color: var(--text-main); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; display: flex; align-items: center; justify-content: space-between;">
+                                <span>JP2008046574A.pdf</span>
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+                            </div>
+                            <div style="font-size: 11px; color: var(--text-muted); margin-top: 2px;">PDF ドキュメント</div>
+                        </div>
                     </div>
                 </div>
+
+                <div style="border: 1px solid var(--border-color); border-radius: 8px; background: #fff; position: relative;">
+                    <div style="padding: 12px; display: flex; gap: 10px; align-items: flex-start;">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="color:var(--primary); margin-top: 2px; flex-shrink: 0;"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+                        <div style="flex:1; min-width: 0;">
+                            <div style="font-size: 13px; font-weight: 600; color: var(--text-main); white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">JP2008129002A.pdf</div>
+                            <div style="font-size: 11px; color: var(--text-muted); margin-top: 2px;">PDF ドキュメント</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <button class="btn-primary" onclick="startAnalysis()" id="analyze-btn" style="margin-top: 8px;">
+                    特許PDFの基礎解析
+                </button>
             </div>
         </div>
 
@@ -172,11 +194,68 @@
             </div>
             
             <div class="studio-content" id="right-panel-scrollbox">
-                <div id="baseline-result" style="display:none;">
-                    <div class="studio-card">
-                        <h3>請求項 1</h3>
-                        <div class="data-row"><span class="data-label">課題</span>従来のシステムでは解析速度が遅く、精度が低い状態であった。</div>
-                        <div class="data-row" style="margin-top: 8px;"><span class="data-label">解決手段</span>分散AIモデルによる並列処理と軽量化された特徴抽出エンジンの統合。</div>
+                <div id="baseline-result" style="display:none; display: flex; flex-direction: column; gap: 16px;">
+                    
+                    <!-- エクスポートカード -->
+                    <div style="border: 1px solid #c7d2fe; border-radius: 12px; padding: 16px; background: linear-gradient(180deg, #eef2ff 0%, #ffffff 100%);">
+                        <div style="font-weight: 700; color: #4338ca; font-size: 14px; margin-bottom: 4px;">エクスポート</div>
+                        <div style="font-size: 12px; color: var(--text-muted); margin-bottom: 12px;">表示中の分析結果をダウンロードします<br>（複数選択可）。</div>
+                        <div style="display: flex; gap: 8px;">
+                            <button style="flex: 1; background: #10b981; color: white; border: none; padding: 8px; border-radius: 6px; font-size: 13px; font-weight: 600; display: flex; align-items: center; justify-content: center; gap: 6px; cursor: pointer; transition: 0.2s;" onmouseover="this.style.opacity=0.9" onmouseout="this.style.opacity=1">
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg> Excel
+                            </button>
+                            <button style="flex: 1; background: #818cf8; color: white; border: none; padding: 8px; border-radius: 6px; font-size: 13px; font-weight: 600; display: flex; align-items: center; justify-content: center; gap: 6px; cursor: pointer; transition: 0.2s;" onmouseover="this.style.opacity=0.9" onmouseout="this.style.opacity=1">
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg> JSON
+                            </button>
+                        </div>
+                    </div>
+
+                    <div style="border: 1px solid var(--border-color); border-radius: 12px; padding: 16px; background: white; box-shadow: 0 1px 3px rgba(0,0,0,0.02);">
+                        <div style="display: flex; align-items: center; gap: 8px; font-weight: 700; font-size: 14px; margin-bottom: 8px;">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="color:var(--primary)"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/></svg>
+                            請求項 1 (独立項)
+                        </div>
+                        <div style="font-size: 12px; color: var(--text-main); display: flex; align-items: flex-start; gap: 8px; background: #f8fafc; padding: 8px; border-radius: 6px; margin-bottom: 12px;">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="margin-top:2px; flex-shrink:0;"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg> 
+                            <div><span style="font-weight:600;">周波数可変テラヘルツ波内視鏡</span><br><span style="color:var(--text-muted); font-size:11px;">2008.2.28 | 西澤 潤一, 株式会社テラヘルツ研究所</span></div>
+                        </div>
+                        <div style="border-left: 2px solid #e2e8f0; padding-left: 12px; display: flex; flex-direction: column; gap: 12px;">
+                            <div>
+                                <div style="display: flex; align-items: center; gap: 6px; font-size: 13px; font-weight: 700; margin-bottom: 6px; color: #dc2626;">
+                                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg> 解決課題
+                                </div>
+                                <div style="font-size: 12px; color: var(--text-main); line-height: 1.6; background: #fff5f5; padding: 10px; border-radius: 6px;">
+                                    テラヘルツ波発生装置が大型で精密な環境管理を要し、またテラヘルツ波の伝送損失や水蒸気吸収による減衰が大きいため、内視鏡応用が困難であるという課題。
+                                </div>
+                            </div>
+                            <div style="display: flex; align-items: center; gap: 6px; font-size: 13px; font-weight: 600; color: var(--text-main);">
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg> 構成要件と証拠
+                            </div>
+                        </div>
+                    </div>
+
+                    <div style="border: 1px solid var(--border-color); border-radius: 12px; padding: 16px; background: white; box-shadow: 0 1px 3px rgba(0,0,0,0.02);">
+                        <div style="display: flex; align-items: center; gap: 8px; font-weight: 700; font-size: 14px; margin-bottom: 8px;">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="color:var(--primary)"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/></svg>
+                            請求項 2 (従属項)
+                        </div>
+                        <div style="font-size: 12px; color: var(--text-main); display: flex; align-items: flex-start; gap: 8px; background: #f8fafc; padding: 8px; border-radius: 6px; margin-bottom: 12px;">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="margin-top:2px; flex-shrink:0;"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg> 
+                            <div><span style="font-weight:600;">周波数可変テラヘルツ波内視鏡</span><br><span style="color:var(--text-muted); font-size:11px;">2008.2.28 | 西澤 潤一, 株式会社テラヘルツ研究所</span></div>
+                        </div>
+                        <div style="border-left: 2px solid #e2e8f0; padding-left: 12px; display: flex; flex-direction: column; gap: 12px;">
+                            <div>
+                                <div style="display: flex; align-items: center; gap: 6px; font-size: 13px; font-weight: 700; margin-bottom: 6px; color: #dc2626;">
+                                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg> 解決課題
+                                </div>
+                                <div style="font-size: 12px; color: var(--text-main); line-height: 1.6; background: #fff5f5; padding: 10px; border-radius: 6px;">
+                                    測定時の様々な環境要因や検体条件のばらつきにより、取得されるデータの信頼性が低下する課題。
+                                </div>
+                            </div>
+                            <div style="display: flex; align-items: center; gap: 6px; font-size: 13px; font-weight: 600; color: var(--text-main);">
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg> 構成要件と証拠
+                            </div>
+                        </div>
                     </div>
                 </div>
 
@@ -203,8 +282,9 @@
                 <div style="display: flex; flex-direction: column; gap: 24px;">
                     <!-- Big Card 1 -->
                     <div style="border: 1px solid var(--border-color); border-radius: 12px; padding: 24px; background: white; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05); display: flex; flex-direction: column; gap: 16px;">
-                        <div style="display: flex; justify-content: space-between; align-items: flex-start;">
-                            <div>
+                        <div style="display: flex; align-items: flex-start; gap: 16px;">
+                            <input type="checkbox" class="triz-checkbox" checked style="width: 20px; height: 20px; accent-color: var(--accent); cursor: pointer; margin-top: 2px;">
+                            <div style="flex: 1;">
                                 <div style="display: flex; align-items: center; gap: 8px; font-weight: 700; font-size: 16px; margin-bottom: 8px;">
                                     <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="color:var(--primary)"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/></svg>
                                     請求項 1 (独立項)
@@ -214,10 +294,6 @@
                                     <div><span style="font-weight:600;">周波数可変テラヘルツ波内視鏡</span><br><span style="color:var(--text-muted); font-size:11px;">2008.2.28 | 西澤 潤一, 株式会社テラヘルツ研究所</span></div>
                                 </div>
                             </div>
-                            <button class="run-triz-inline-btn" onclick="executeTRIZ()" style="background: var(--accent); color: white; border: none; padding: 10px 20px; font-size: 14px; font-weight: 600; border-radius: 8px; box-shadow: 0 2px 8px rgba(245,158,11,0.3); display: flex; align-items: center; gap: 8px; cursor: pointer; transition: 0.2s;" onmouseover="this.style.transform='translateY(-1px)'" onmouseout="this.style.transform='none'">
-                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
-                                TRIZ分析を実行
-                            </button>
                         </div>
                         
                         <div style="border-left: 3px solid #e2e8f0; padding-left: 16px; display: flex; flex-direction: column; gap: 16px; margin-top: 8px;">
@@ -238,8 +314,9 @@
 
                     <!-- Big Card 2 -->
                     <div style="border: 1px solid var(--border-color); border-radius: 12px; padding: 24px; background: white; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05); display: flex; flex-direction: column; gap: 16px;">
-                        <div style="display: flex; justify-content: space-between; align-items: flex-start;">
-                            <div>
+                        <div style="display: flex; align-items: flex-start; gap: 16px;">
+                            <input type="checkbox" class="triz-checkbox" checked style="width: 20px; height: 20px; accent-color: var(--accent); cursor: pointer; margin-top: 2px;">
+                            <div style="flex: 1;">
                                 <div style="display: flex; align-items: center; gap: 8px; font-weight: 700; font-size: 16px; margin-bottom: 8px;">
                                     <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="color:var(--primary)"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/></svg>
                                     請求項 2 (従属項)
@@ -249,10 +326,6 @@
                                     <div><span style="font-weight:600;">周波数可変テラヘルツ波内視鏡</span><br><span style="color:var(--text-muted); font-size:11px;">2008.2.28 | 西澤 潤一, 株式会社テラヘルツ研究所</span></div>
                                 </div>
                             </div>
-                            <button class="run-triz-inline-btn" onclick="executeTRIZ()" style="background: var(--accent); color: white; border: none; padding: 10px 20px; font-size: 14px; font-weight: 600; border-radius: 8px; box-shadow: 0 2px 8px rgba(245,158,11,0.3); display: flex; align-items: center; gap: 8px; cursor: pointer; transition: 0.2s;" onmouseover="this.style.transform='translateY(-1px)'" onmouseout="this.style.transform='none'">
-                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
-                                TRIZ分析を実行
-                            </button>
                         </div>
                         
                         <div style="border-left: 3px solid #e2e8f0; padding-left: 16px; display: flex; flex-direction: column; gap: 16px; margin-top: 8px;">
@@ -270,6 +343,20 @@
                             </div>
                         </div>
                     </div>
+                </div>
+
+                <!-- Sticky Action Bar -->
+                <div style="position: sticky; bottom: -32px; background: rgba(255,255,255,0.95); backdrop-filter: blur(8px); padding: 16px 24px; border-top: 1px solid var(--border-color); border-radius: 12px; margin: 24px 0 0 0; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 -10px 30px rgba(0,0,0,0.05);">
+                    <div style="font-size: 14px; font-weight: 600; color: var(--text-main);">
+                        <label style="display: flex; align-items: center; gap: 8px; cursor: pointer; padding: 8px; border-radius: 8px; transition: 0.2s;" onmouseover="this.style.background='#f1f5f9'" onmouseout="this.style.background='transparent'">
+                            <input type="checkbox" checked onchange="document.querySelectorAll('.triz-checkbox').forEach(cb => cb.checked = this.checked)" style="width: 18px; height: 18px; accent-color: var(--primary); cursor: pointer;">
+                            すべて選択 / 解除
+                        </label>
+                    </div>
+                    <button onclick="executeTRIZ()" style="background: var(--accent); color: white; border: none; padding: 12px 28px; font-size: 15px; font-weight: 700; border-radius: 8px; box-shadow: 0 4px 12px rgba(245,158,11,0.3); display: flex; align-items: center; gap: 8px; cursor: pointer; transition: 0.2s;" onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 6px 16px rgba(245,158,11,0.4)';" onmouseout="this.style.transform='none'; this.style.boxShadow='0 4px 12px rgba(245,158,11,0.3)';">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+                        選択した課題でTRIZ分析を開始
+                    </button>
                 </div>
             </div>
         </div>
